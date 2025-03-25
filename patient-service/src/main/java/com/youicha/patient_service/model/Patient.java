@@ -30,7 +30,7 @@ public class Patient {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "phone")
+    @Column(name = "phone_number")
     private String phone;
 
 
