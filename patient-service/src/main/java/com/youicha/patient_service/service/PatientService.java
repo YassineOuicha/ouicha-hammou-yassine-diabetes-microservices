@@ -40,7 +40,7 @@ public class PatientService {
         return null;
     }
 
-    public void deletePatient(Patient patient){
-        patientRepository.delete(patient);
+    public void deletePatientById(Long patientId){
+        patientRepository.deleteById(patientId);
     }
 }
