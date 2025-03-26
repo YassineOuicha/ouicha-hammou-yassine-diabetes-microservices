@@ -34,7 +34,7 @@ public class PatientService {
             updatedPatient.setBirthDate(patient.getBirthDate());
             updatedPatient.setGender(patient.getGender());
             updatedPatient.setAddress(patient.getAddress());
-            updatedPatient.setPhone(patient.getPhone());
+            updatedPatient.setPhoneNumber(patient.getPhoneNumber());
             return patientRepository.save(updatedPatient);
         }
         return null;
