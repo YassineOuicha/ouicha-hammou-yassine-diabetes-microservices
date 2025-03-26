@@ -1,4 +1,5 @@
 package com.youicha.risk_service.controller;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.youicha.risk_service.model.Note;
 import com.youicha.risk_service.model.Patient;
@@ -28,7 +29,7 @@ public class RiskController {
         Patient patient = restTemplate.getForObject("http://localhost:8080/patients/" + patientId, Patient.class);
 
         if (patient == null) {
-            throw new RuntimeException("Patient not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not found with ID: " + patientId);
         }
 
         // Retrieving medicals notes from notes-service by using the Gateway Service
