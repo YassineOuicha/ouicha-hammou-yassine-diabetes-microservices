@@ -2,16 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Patients List</title>
+    <title>Liste des Patients</title>
+    <link rel="stylesheet" href="patients.css">
 </head>
 <body>
-<h1>Liste des Patients</h1>
-<ul>
+<div class="container">
+    <header>
+        <h1>Liste des Patients</h1>
+    </header>
 
-    <li th:each="patient : ${patients}"
-        th:text="${patient.firstName} + ' ' + ${patient.lastName}">
-        Patient Name
-    </li>
-</ul>
+    <table class="patient-table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de Naissance</th>
+            <th>Genre</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.lastName}">Nom</td>
+            <td th:text="${patient.firstName}">Prénom</td>
+            <td th:text="${patient.birthDate}">Date de Naissance</td>
+            <td th:text="${patient.gender}">Genre</td>
+            <td th:text="${patient.address}">Adresse</td>
+            <td th:text="${patient.phoneNumber}">Téléphone</td>
+            <td class="actions">
+                <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-view">Consulter</a>
+                <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-edit">Modifier</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${patients.isEmpty()}" class="empty-state">
+        <p>Aucun patient n'a été trouvé.</p>
+    </div>
+</div>
 </body>
 </html>
