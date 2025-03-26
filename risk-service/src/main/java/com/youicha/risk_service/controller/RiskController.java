@@ -27,6 +27,10 @@ public class RiskController {
         // Retrieving patient from patient-service by using the Gateway Service
         Patient patient = restTemplate.getForObject("http://localhost:8080/patients/" + patientId, Patient.class);
 
+        if (patient == null) {
+            throw new RuntimeException("Patient not found");
+        }
+
         // Retrieving medicals notes from notes-service by using the Gateway Service
         Note[] notesArray = restTemplate.getForObject("http://localhost:8080/notes/" + patientId, Note[].class);
         List<Note> notes = Arrays.asList(notesArray);
