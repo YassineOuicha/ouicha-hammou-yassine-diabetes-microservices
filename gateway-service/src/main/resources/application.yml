@@ -8,3 +8,11 @@ spring:
           uri: http://localhost:8081  # patient-service
           predicates:
             - Path=/patients/**
+        - id: notes-service
+          uri: http://localhost:8082  # notes-service
+          predicates:
+            - Path=/notes/**
+        - id: risk-service
+          uri: http://localhost:8083  # risk-service
+          predicates:
+            - Path=/risk/**
