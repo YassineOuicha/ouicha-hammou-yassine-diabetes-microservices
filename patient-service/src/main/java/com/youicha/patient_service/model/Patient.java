@@ -5,8 +5,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "patients")
 public class Patient {
@@ -34,8 +32,21 @@ public class Patient {
     private String phoneNumber;
 
 
-    // Setters and getters
+    // Constructors
 
+    public Patient() {
+    }
+
+    public Patient(String firstName, String lastName, LocalDate birthDate, String gender, String address, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Setters and getters
 
     public Long getId() {
         return id;

@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/patient-service.jar patient-service.jar
-ENTRYPOINT ["java","-jar","/patient-service.jar"]
+WORKDIR /app
+COPY target/patient-service.jar app.jar
+EXPOSE 8081
+CMD ["java", "-jar", "app.jar"]

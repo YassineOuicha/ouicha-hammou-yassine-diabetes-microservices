@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/notes-service.jar notes-service.jar
-ENTRYPOINT ["java","-jar","/notes-service.jar"]
+WORKDIR /app
+COPY target/notes-service.jar app.jar
+EXPOSE 8083
+CMD ["java", "-jar", "app.jar"]

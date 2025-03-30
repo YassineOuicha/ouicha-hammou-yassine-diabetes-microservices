@@ -1,0 +1,50 @@
+services:
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - patient-service
+      - notes-service
+      - risk-service
+    networks:
+      - diabetes-network
+
+  front-service:
+    build: ./front-service
+    container_name: front-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - gateway-service
+    networks:
+      - diabetes-network
+
+  patient-service:
+    build: ./patient-service
+    container_name: patient-service
+    ports:
+      - "8081:8081"
+    networks:
+      - diabetes-network
+
+  notes-service:
+    build: ./notes-service
+    container_name: notes-service
+    ports:
+      - "8083:8083"
+    networks:
+      - diabetes-network
+
+  risk-service:
+    build: ./risk-service
+    container_name: risk-service
+    ports:
+      - "8084:8084"
+    networks:
+      - diabetes-network
+
+networks:
+  diabetes-network:
+    driver: bridge

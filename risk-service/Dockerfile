@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/risk-service.jar risk-service.jar
-ENTRYPOINT ["java","-jar","/risk-service.jar"]
+WORKDIR /app
+COPY target/risk-service.jar app.jar
+EXPOSE 8084
+CMD ["java", "-jar", "app.jar"]

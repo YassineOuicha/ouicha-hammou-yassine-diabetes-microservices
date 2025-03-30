@@ -20,18 +20,13 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Patient> getPatientById(@PathVariable Long id) {
+    public Optional<Patient> getPatient(@PathVariable Long id) {
         return patientService.getPatientById(id);
     }
 
     @PostMapping
-    public Patient createPatient(@RequestBody Patient patient) {
+    public Patient createOrUpdatePatient(@RequestBody Patient patient) {
         return patientService.savePatient(patient);
-    }
-
-    @PutMapping("/{id}")
-    public Patient updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
-        return patientService.updatePatient(id, patient);
     }
 
     @DeleteMapping("/{id}")

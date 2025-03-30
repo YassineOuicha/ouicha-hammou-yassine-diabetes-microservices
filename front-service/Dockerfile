@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/front-service.jar front-service.jar
-ENTRYPOINT ["java","-jar","/front-service.jar"]
+WORKDIR /app
+COPY target/front-service.jar app.jar
+EXPOSE 8082
+CMD ["java", "-jar", "app.jar"]

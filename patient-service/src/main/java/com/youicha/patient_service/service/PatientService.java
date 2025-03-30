@@ -25,21 +25,6 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Patient updatePatient(Long id, Patient patient) {
-        Optional<Patient> existingPatient = patientRepository.findById(id);
-        if (existingPatient.isPresent()) {
-            Patient updatedPatient = existingPatient.get();
-            updatedPatient.setFirstName(patient.getFirstName());
-            updatedPatient.setLastName(patient.getLastName());
-            updatedPatient.setBirthDate(patient.getBirthDate());
-            updatedPatient.setGender(patient.getGender());
-            updatedPatient.setAddress(patient.getAddress());
-            updatedPatient.setPhoneNumber(patient.getPhoneNumber());
-            return patientRepository.save(updatedPatient);
-        }
-        return null;
-    }
-
     public void deletePatientById(Long patientId){
         patientRepository.deleteById(patientId);
     }

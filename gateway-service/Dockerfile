@@ -1,4 +1,5 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/gateway-service.jar gateway-service.jar
-ENTRYPOINT ["java","-jar","/gateway-service.jar"]
+WORKDIR /app
+COPY target/gateway-service.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
