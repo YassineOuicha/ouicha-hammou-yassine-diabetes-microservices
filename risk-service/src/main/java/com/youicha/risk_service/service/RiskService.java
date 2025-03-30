@@ -13,7 +13,7 @@ public class RiskService {
 
     private static final Set<String> TRIGGER_TERMS = Set.of(
             "Hémoglobine A1C", "Microalbumine", "Taille", "Poids", "Fumeur", "Fumeuse",
-            "Anormal", "Cholestérol", "Vertige", "Rechute", "Réaction", "Anticorps"
+            "Anormal", "Cholestérol", "Vertiges", "Rechute", "Réaction", "Anticorps"
     );
 
     public int countTriggers(List<Note> notes) {

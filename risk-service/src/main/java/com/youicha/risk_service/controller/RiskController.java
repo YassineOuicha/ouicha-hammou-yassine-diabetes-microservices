@@ -1,4 +1,5 @@
 package com.youicha.risk_service.controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.youicha.risk_service.model.Note;
