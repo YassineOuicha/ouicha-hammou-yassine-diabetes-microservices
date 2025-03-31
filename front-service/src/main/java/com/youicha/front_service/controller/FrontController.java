@@ -23,7 +23,7 @@ public class FrontController {
     public String showPatients(Model model){
         try {
             // Fetch patients from patient-service via gateway
-            Object[] patients = restTemplate.getForObject("http://gateway-service:8080/patients", Object[].class);
+            Object[] patients = restTemplate.getForObject("http://gateway-service:8080/api/patients", Object[].class);
             model.addAttribute("patients", patients != null ? Arrays.asList(patients) : Collections.emptyList());
         } catch (Exception e) {
             model.addAttribute("error", "Unable to fetch patients: " + e.getMessage());

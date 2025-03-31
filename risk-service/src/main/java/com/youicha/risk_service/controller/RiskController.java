@@ -35,7 +35,7 @@ public class RiskController {
     public String getRisk(@PathVariable Long patientId){
 
         // Retrieving patient from patient-service via gateway-service
-        Patient patient = restTemplate.getForObject("http://gateway-service:8080/patients/" + patientId, Patient.class);
+        Patient patient = restTemplate.getForObject("http://gateway-service:8080/api/patients/" + patientId, Patient.class);
 
         if (patient == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not found with ID: " + patientId);
