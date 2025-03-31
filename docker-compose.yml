@@ -22,6 +22,12 @@ services:
     container_name: patient-service
     ports:
       - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/patientdb?createDatabaseIfNotExist=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=98741
     networks:
       - diabetes-network
 
@@ -44,6 +50,10 @@ services:
     container_name: notes-service
     ports:
       - "8083:8083"
+    depends_on:
+      - mongodb
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/notesdb
     networks:
       - diabetes-network
 
@@ -57,6 +67,33 @@ services:
     networks:
       - diabetes-network
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 98741
+      MYSQL_DATABASE: patientdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - diabetes-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - diabetes-network
+
 networks:
   diabetes-network:
     driver: bridge
+
+volumes:
+  mysql-data:
+  mongodb-data:
