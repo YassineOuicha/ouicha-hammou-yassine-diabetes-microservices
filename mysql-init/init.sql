@@ -11,6 +11,9 @@ CREATE TABLE IF NOT EXISTS patients (
     phone_number VARCHAR(20) DEFAULT NULL
 );
 
+USE patientdb;
+SELECT * FROM patients;
+
 INSERT INTO patients (first_name, last_name, birth_date, gender, address, phone_number)
 VALUES
     ('TestNone', 'Test', '1966-12-31', 'F', '1 Brookside St', '100-222-3333'),
