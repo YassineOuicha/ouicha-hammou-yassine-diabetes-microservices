@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class RiskController {
 
         // Retrieving medicals notes from notes-service via gateway-service
         Note[] notesArray = restTemplate.getForObject("http://gateway-service:8080/notes/" + patientId, Note[].class);
-        List<Note> notes = Arrays.asList(notesArray);
+        List<Note> notes = (notesArray != null) ? Arrays.asList(notesArray) : Collections.emptyList();
 
         return riskService.evaluateRisk(patient, notes);
     }
