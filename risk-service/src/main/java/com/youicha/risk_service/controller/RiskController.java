@@ -1,4 +1,5 @@
 package com.youicha.risk_service.controller;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,7 +22,13 @@ public class RiskController {
     @Autowired
     private RiskService riskService;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
+    public RiskController(RestTemplateBuilder builder) {
+        this.restTemplate = builder
+                .basicAuthentication("admin", "admin123")
+                .build();
+    }
 
     @GetMapping("/{patientId}")
     public String getRisk(@PathVariable Long patientId){
