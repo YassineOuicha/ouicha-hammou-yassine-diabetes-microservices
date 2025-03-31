@@ -1,6 +1,10 @@
+version: '3.8'
+
 services:
   gateway-service:
-    build: ./gateway-service
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
     container_name: gateway-service
     ports:
       - "8080:8080"
@@ -11,8 +15,20 @@ services:
     networks:
       - diabetes-network
 
+  patient-service:
+    build:
+      context: ./patient-service
+      dockerfile: Dockerfile
+    container_name: patient-service
+    ports:
+      - "8081:8081"
+    networks:
+      - diabetes-network
+
   front-service:
-    build: ./front-service
+    build:
+      context: ./front-service
+      dockerfile: Dockerfile
     container_name: front-service
     ports:
       - "8082:8082"
@@ -21,16 +37,10 @@ services:
     networks:
       - diabetes-network
 
-  patient-service:
-    build: ./patient-service
-    container_name: patient-service
-    ports:
-      - "8081:8081"
-    networks:
-      - diabetes-network
-
   notes-service:
-    build: ./notes-service
+    build:
+      context: ./notes-service
+      dockerfile: Dockerfile
     container_name: notes-service
     ports:
       - "8083:8083"
@@ -38,7 +48,9 @@ services:
       - diabetes-network
 
   risk-service:
-    build: ./risk-service
+    build:
+      context: ./risk-service
+      dockerfile: Dockerfile
     container_name: risk-service
     ports:
       - "8084:8084"
