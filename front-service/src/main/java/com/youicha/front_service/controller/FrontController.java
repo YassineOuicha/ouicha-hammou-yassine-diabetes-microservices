@@ -15,6 +15,7 @@ public class FrontController {
     @GetMapping("/patients")
     public String showPatients(Model model){
         try {
+            // Fetch patients from patient-service via gateway
             Object[] patients = restTemplate.getForObject("http://gateway-service:8080/patients", Object[].class);
             model.addAttribute("patients", patients != null ? Arrays.asList(patients) : Collections.emptyList());
         } catch (Exception e) {

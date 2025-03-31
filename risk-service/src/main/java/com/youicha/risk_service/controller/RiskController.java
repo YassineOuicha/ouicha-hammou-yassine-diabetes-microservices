@@ -26,15 +26,15 @@ public class RiskController {
     @GetMapping("/{patientId}")
     public String getRisk(@PathVariable Long patientId){
 
-        // Retrieving patient from patient-service by using the Gateway Service
-        Patient patient = restTemplate.getForObject("http://localhost:8080/patients/" + patientId, Patient.class);
+        // Retrieving patient from patient-service via gateway-service
+        Patient patient = restTemplate.getForObject("http://gateway-service:8080/patients/" + patientId, Patient.class);
 
         if (patient == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patient not found with ID: " + patientId);
         }
 
-        // Retrieving medicals notes from notes-service by using the Gateway Service
-        Note[] notesArray = restTemplate.getForObject("http://localhost:8080/notes/" + patientId, Note[].class);
+        // Retrieving medicals notes from notes-service via gateway-service
+        Note[] notesArray = restTemplate.getForObject("http://gateway-service:8080/notes/" + patientId, Note[].class);
         List<Note> notes = Arrays.asList(notesArray);
 
         return riskService.evaluateRisk(patient, notes);
