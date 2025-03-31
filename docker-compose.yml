@@ -21,7 +21,8 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/patientdb?createDatabaseIfNotExist=true&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
@@ -75,6 +76,12 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
     networks:
       - diabetes-network
 
