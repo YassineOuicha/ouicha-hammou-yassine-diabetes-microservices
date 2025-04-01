@@ -51,6 +51,11 @@ public class FrontController {
             Note newNote = new Note();
             newNote.setPatientId(id);
             model.addAttribute("note", newNote);
+
+            // Fetching risk evaluation from risk-service via gateway-service
+            String riskEvaluation = restTemplate.getForObject("http://gateway-service:8080/risk/" + id, String.class);
+            model.addAttribute("riskEvaluation", riskEvaluation);
+
         } catch (Exception e) {
             model.addAttribute("error", "Unable to fetch patient details: " + e.getMessage());
         }
@@ -63,9 +68,9 @@ public class FrontController {
             // Sending the new note to notes-service via gateway-service
             restTemplate.postForObject("http://gateway-service:8080/notes", note, Note.class);
         } catch (Exception e) {
-            System.out.println("Error adding note: " + e.getMessage());
+            System.out.println("Error while adding the note: " + e.getMessage());
         }
-        // Redirects to patient details page after adding
+        // Redirects to patient details page after adding the note
         return "redirect:/patients/" + note.getPatientId();
     }
 }
