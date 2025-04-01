@@ -34,7 +34,6 @@
             <td th:text="${patient.phoneNumber} ?: 'Non renseigné'">Téléphone</td>
             <td class="actions">
                 <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-primary btn-sm">Consulter</a>
-                <a th:href="@{/patients/{id}/edit(id=${patient.id})}" class="btn btn-warning btn-sm">Modifier</a>
             </td>
         </tr>
         </tbody>
