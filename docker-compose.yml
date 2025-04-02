@@ -1,104 +1,113 @@
 services:
+  # Gateway service to route requests to microservices
   gateway-service:
     build:
-      context: ./gateway-service
-      dockerfile: Dockerfile
-    container_name: gateway-service
+      context: ./gateway-service  # Path to the build context for the gateway service
+      dockerfile: Dockerfile  # Dockerfile to build the gateway service image
+    container_name: gateway-service  # Name of the container for the gateway service
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Expose port 8080 on the host to port 8080 inside the container
     depends_on:
-      - patient-service
-      - notes-service
-      - risk-service
+      - patient-service  # Gateway depends on patient service
+      - notes-service    # Gateway depends on notes service
+      - risk-service     # Gateway depends on risk service
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # Patient service that handles patient data and interacts with MySQL database
   patient-service:
     build:
-      context: ./patient-service
-      dockerfile: Dockerfile
-    container_name: patient-service
+      context: ./patient-service  # Path to the build context for the patient service
+      dockerfile: Dockerfile  # Dockerfile to build the patient service image
+    container_name: patient-service  # Name of the container for the patient service
     ports:
-      - "8081:8081"
+      - "8081:8081"  # Expose port 8081 on the host to port 8081 inside the container
     depends_on:
       mysql:
-        condition: service_healthy
+        condition: service_healthy  # Wait for mysql container to be healthy before starting
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/patientdb?createDatabaseIfNotExist=true&serverTimezone=UTC
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=98741
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/patientdb?createDatabaseIfNotExist=true&serverTimezone=UTC  # MySQL connection URL for the patient service
+      - SPRING_DATASOURCE_USERNAME=root  # Username for MySQL
+      - SPRING_DATASOURCE_PASSWORD=98741  # Password for MySQL
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # Frontend service that interacts with the backend through the gateway service
   front-service:
     build:
-      context: ./front-service
-      dockerfile: Dockerfile
-    container_name: front-service
+      context: ./front-service  # Path to the build context for the front service
+      dockerfile: Dockerfile  # Dockerfile to build the frontend service image
+    container_name: front-service  # Name of the container for the front service
     ports:
-      - "8082:8082"
+      - "8082:8082"  # Expose port 8082 on the host to port 8082 inside the container
     depends_on:
-      - gateway-service
+      - gateway-service  # Frontend depends on the gateway service
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # Notes service that handles medical notes and stores them in MongoDB database
   notes-service:
     build:
-      context: ./notes-service
-      dockerfile: Dockerfile
-    container_name: notes-service
+      context: ./notes-service  # Path to the build context for the notes service
+      dockerfile: Dockerfile  # Dockerfile to build the notes service image
+    container_name: notes-service  # Name of the container for the notes service
     ports:
-      - "8083:8083"
+      - "8083:8083"  # Expose port 8083 on the host to port 8083 inside the container
     depends_on:
-      - mongodb
+      - mongodb  # Notes service depends on MongoDB container
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/notesdb
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/notesdb  # MongoDB connection URI for the notes service
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # Risk service that evaluates the patient's risk based on medical notes
   risk-service:
     build:
-      context: ./risk-service
-      dockerfile: Dockerfile
-    container_name: risk-service
+      context: ./risk-service  # Path to the build context for the risk service
+      dockerfile: Dockerfile  # Dockerfile to build the risk service image
+    container_name: risk-service  # Name of the container for the risk service
     ports:
-      - "8084:8084"
+      - "8084:8084"  # Expose port 8084 on the host to port 8084 inside the container
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # MySQL database for storing patients' data
   mysql:
-    image: mysql:8.0
-    container_name: mysql
+    image: mysql:8.0  # MySQL image version 8.0 from Docker Hub
+    container_name: mysql  # Name of the container for the MySQL service
     environment:
-      MYSQL_ROOT_PASSWORD: 98741
-      MYSQL_DATABASE: patientdb
+      MYSQL_ROOT_PASSWORD: 98741  # Root password for MySQL
+      MYSQL_DATABASE: patientdb  # Database name to be created in MySQL
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Expose port 3306 on the host to port 3306 inside the container
     volumes:
-      - mysql-data:/var/lib/mysql
-      - ./mysql-init:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql  # Volume to persist MySQL data
+      - ./mysql-init:/docker-entrypoint-initdb.d  # Custom initialization script for MySQL database
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 10s
-      retries: 10
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]  # Health check for MySQL
+      interval: 5s  # Health check interval
+      timeout: 10s  # Health check timeout
+      retries: 10  # Number of retries before considering MySQL unhealthy
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+  # MongoDB database for storing medical notes
   mongodb:
-    image: mongo:latest
-    container_name: mongodb
+    image: mongo:latest  # MongoDB image from Docker Hub
+    container_name: mongodb  # Name of the container for MongoDB
     ports:
-      - "27017:27017"
+      - "27017:27017"  # Expose port 27017 on the host to port 27017 inside the container
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data:/data/db  # Volume to persist MongoDB data
     networks:
-      - diabetes-network
+      - diabetes-network  # Connect this service to the 'diabetes-network'
 
+# Define custom network for communication between services
 networks:
   diabetes-network:
-    driver: bridge
+    driver: bridge  # Use bridge network driver
 
+# Define persistent volumes for MySQL and MongoDB
 volumes:
-  mysql-data:
-  mongodb-data:
+  mysql-data:  # Persistent storage for MySQL data
+  mongodb-data:  # Persistent storage for MongoDB data
