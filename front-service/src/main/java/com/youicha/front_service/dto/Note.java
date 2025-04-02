@@ -1,5 +1,9 @@
 package com.youicha.front_service.dto;
 
+
+/**
+ * Data Transfer Object representing a Note
+ */
 public class Note {
 
     private String id;
