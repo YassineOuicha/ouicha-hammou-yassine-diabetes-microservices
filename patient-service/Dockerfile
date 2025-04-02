@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the built JAR file from the target directory to the container and rename it to app.jar
 COPY target/patient-service-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port 8080 for the application to listen on
+# Expose port 8081 for the application to listen on
 EXPOSE 8081
 
 # Run the application by executing the JAR file using the java command

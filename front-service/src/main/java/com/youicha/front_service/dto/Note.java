@@ -10,6 +10,17 @@ public class Note {
     private Long patientId;
     private String noteText;
 
+    // constructors
+
+    public Note() {
+    }
+
+    public Note(String id, Long patientId, String noteText) {
+        this.id = id;
+        this.patientId = patientId;
+        this.noteText = noteText;
+    }
+
     // Getters and Setters
 
     public Long getPatientId() {

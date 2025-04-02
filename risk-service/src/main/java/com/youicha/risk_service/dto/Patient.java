@@ -1,7 +1,10 @@
-package com.youicha.risk_service.model;
+package com.youicha.risk_service.dto;
 
 import java.time.LocalDate;
 
+/**
+ * Data Transfer Object representing a patient
+ */
 public class Patient {
 
     private Long id;
@@ -9,6 +12,19 @@ public class Patient {
     private String lastName;
     private LocalDate birthDate;
     private String gender;
+
+    // Constructors
+
+    public Patient() {
+    }
+
+    public Patient(Long id, String firstName, String lastName, LocalDate birthDate, String gender) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.gender = gender;
+    }
 
     // Getters et setters
 
