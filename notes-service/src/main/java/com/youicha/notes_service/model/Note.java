@@ -3,7 +3,10 @@ package com.youicha.notes_service.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
+/**
+ * Note entity for storing patient's notes
+ * Uses MongoDB document storage (notes as a collection)
+ */
 @Document(collection = "notes")
 public class Note {
 

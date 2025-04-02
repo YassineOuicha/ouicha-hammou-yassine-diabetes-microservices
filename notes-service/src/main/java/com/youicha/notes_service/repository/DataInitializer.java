@@ -5,12 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component for initializing sample note data
+ * Runs on application startup
+ */
 @Component
 public class DataInitializer implements CommandLineRunner {
 
+    /**
+     * Repository for note CRUD operations
+     */
     @Autowired
     private NoteRepository noteRepository;
 
+    /**
+     * Method executed on application startup
+     * Fills the database with initial notes if none exist
+     * @param args Command line arguments
+     */
     @Override
     public void run(String... args) {
 
