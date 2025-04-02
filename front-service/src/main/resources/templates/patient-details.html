@@ -31,8 +31,14 @@
     <div class="mb-4">
         <h2 class="h5 mb-3">Risque de diabète TYPE 2</h2>
         <div th:if="${riskEvaluation}">
-            <p class="alert alert-info mb-0">
-                Niveau de risque : <strong th:text="${riskEvaluation}"></strong>
+            <p class="mb-0" th:switch="${riskEvaluation}">
+                <span th:case="'None'" class="badge bg-success">None</span>
+                <span th:case="'Borderline'" class="badge bg-warning text-dark">Borderline</span>
+                <span th:case="'InDanger'" class="badge bg-danger">InDanger</span>
+                <span th:case="'EarlyOnset'" class="badge bg-danger">EarlyOnset</span>
+                <span th:case="*"
+                      class="badge bg-secondary"
+                      th:text="${riskEvaluation}"></span>
             </p>
         </div>
     </div>
