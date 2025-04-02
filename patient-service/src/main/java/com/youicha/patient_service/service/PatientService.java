@@ -7,24 +7,49 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for Patient related CRUD operations
+ * Handles business logic for patient management
+ */
 @Service
 public class PatientService {
 
+    /**
+     * Repository for database crud operations related to patients
+     */
     @Autowired
     private PatientRepository patientRepository;
 
+    /**
+     * Retrieves all patients from the database
+     * @return List of all patients
+     */
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
     }
 
+    /**
+     * Finds a patient by their ID
+     * @param id The unique identifier of the patient to find
+     * @return Optional containing the patient if found and empty otherwise
+     */
     public Optional<Patient> getPatientById(Long id) {
         return patientRepository.findById(id);
     }
 
+    /**
+     * Saves a new patient or updates an existing one
+     * @param patient The patient object to save / update
+     * @return The saved /updated patient with assigned ID
+     */
     public Patient savePatient(Patient patient) {
         return patientRepository.save(patient);
     }
 
+    /**
+     * Deletes a patient by their ID
+     * @param patientId The unique identifier of the patient to delete
+     */
     public void deletePatientById(Long patientId){
         patientRepository.deleteById(patientId);
     }
