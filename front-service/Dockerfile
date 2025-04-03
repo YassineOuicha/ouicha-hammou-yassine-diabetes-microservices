@@ -1,14 +1,20 @@
-# Use OpenJDK 17 slim image as the base image for a lightweight runtime environment
-FROM openjdk:17-jdk-slim
+# Use OpenJDK 17 with Maven as the base image
+FROM maven:3.8.5-openjdk-17
 
 # Set the working directory inside the container to /app
 WORKDIR /app
 
-# Copy the built JAR file from the target directory to the container and rename it to app.jar
-COPY target/front-service-0.0.1-SNAPSHOT.jar app.jar
+# Copy the Maven configuration file (pom.xml) to the container
+COPY pom.xml .
+
+# Copy the source code directory (src) to the container
+COPY src src
+
+# Build the application using Maven
+RUN mvn clean package
 
 # Expose port 8082 for the application to listen on
 EXPOSE 8082
 
-# Run the application by executing the JAR file using the java command
-CMD ["java", "-jar", "app.jar"]
+# Run the application by executing the JAR file with the java command
+CMD ["java", "-jar", "target/front.jar"]
