@@ -64,12 +64,3 @@ header {
     padding: 1rem;
   }
 }
-.bg-orange {
-    background-color: orange !important;
-    color: white !important;
-}
-
-.bg-red {
-    background-color: red !important;
-    color: white !important;
-}

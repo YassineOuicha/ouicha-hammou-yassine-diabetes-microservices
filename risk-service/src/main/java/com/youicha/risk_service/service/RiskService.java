@@ -53,18 +53,18 @@ public class RiskService {
         int age = calculateAge(patient.getBirthDate());
         String gender = patient.getGender().toLowerCase();
 
-        // Early Onset
+        // EarlyOnset
         if ((age < 30 && gender.equals("m") && triggerCount >= 5) ||
                 (age < 30 && gender.equals("f") && triggerCount >= 7) ||
                 (age > 30 && triggerCount >= 8)) {
-            return "Early Onset";
+            return "EarlyOnset";
         }
 
-        // In Danger
+        // InDanger
         if ((age < 30 && gender.equals("m") && triggerCount >= 3) ||
                 (age < 30 && gender.equals("f") && triggerCount >= 4) ||
                 (age > 30 && triggerCount >= 6 && triggerCount <= 7)) {
-            return "In Danger";
+            return "InDanger";
         }
 
         // Borderline

@@ -29,13 +29,13 @@
     </div>
 
     <div class="mb-4">
-        <h2 class="h5 mb-3">Risque de diabète du type 2 :</h2>
+        <h2 class="h5 mb-3">Risque du diabète — type 2 :</h2>
         <div th:if="${riskEvaluation}">
             <p class="alert mb-0"
                th:classappend="${riskEvaluation == 'None' ? 'alert-success' :
                     (riskEvaluation == 'Borderline' ? 'alert-warning' :
-                    (riskEvaluation == 'InDanger' ? 'bg-orange' :
-                    (riskEvaluation == 'EarlyOnset' ? 'bg-red' : 'alert-secondary')))}">
+                    (riskEvaluation == 'InDanger' ? 'alert-danger' :
+                    (riskEvaluation == 'EarlyOnset' ? 'alert-danger' : 'alert-secondary')))}">
                 Niveau de risque : <strong th:text="${riskEvaluation}"></strong>
             </p>
         </div>
