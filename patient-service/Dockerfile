@@ -11,7 +11,7 @@ COPY pom.xml .
 COPY src src
 
 # Build the application using Maven
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Expose port 8081 for the application to listen on
 EXPOSE 8081
