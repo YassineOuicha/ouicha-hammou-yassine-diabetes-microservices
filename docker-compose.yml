@@ -79,7 +79,7 @@ services:
       MYSQL_ROOT_PASSWORD: 98741  # Root password for MySQL
       MYSQL_DATABASE: patientdb  # Database name to be created in MySQL
     ports:
-      - "3306:3306"  # Expose port 3306 on the host to port 3306 inside the container
+      - "3307:3306"  # Expose port 3307 on the host to port 3306 inside the container
     volumes:
       - mysql-data:/var/lib/mysql  # Volume to persist MySQL data
       - ./mysql-init:/docker-entrypoint-initdb.d  # Custom initialization script for MySQL database
