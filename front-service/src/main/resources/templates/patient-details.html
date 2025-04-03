@@ -16,7 +16,7 @@
 
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h2 class="h5 mb-3">Informations personnelles</h2>
+            <h2 class="h5 mb-3">Informations personnelles :</h2>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Nom :</strong> <span th:text="${patient.lastName}"></span></li>
                 <li class="list-group-item"><strong>Prénom :</strong> <span th:text="${patient.firstName}"></span></li>
@@ -29,22 +29,20 @@
     </div>
 
     <div class="mb-4">
-        <h2 class="h5 mb-3">Risque de diabète TYPE 2</h2>
+        <h2 class="h5 mb-3">Risque de diabète du type 2 :</h2>
         <div th:if="${riskEvaluation}">
-            <p class="mb-0" th:switch="${riskEvaluation}">
-                <span th:case="'None'" class="badge bg-success">None</span>
-                <span th:case="'Borderline'" class="badge bg-warning text-dark">Borderline</span>
-                <span th:case="'InDanger'" class="badge bg-danger">InDanger</span>
-                <span th:case="'EarlyOnset'" class="badge bg-danger">EarlyOnset</span>
-                <span th:case="*"
-                      class="badge bg-secondary"
-                      th:text="${riskEvaluation}"></span>
+            <p class="alert mb-0"
+               th:classappend="${riskEvaluation == 'None' ? 'alert-success' :
+                    (riskEvaluation == 'Borderline' ? 'alert-warning' :
+                    (riskEvaluation == 'InDanger' ? 'bg-orange' :
+                    (riskEvaluation == 'EarlyOnset' ? 'bg-red' : 'alert-secondary')))}">
+                Niveau de risque : <strong th:text="${riskEvaluation}"></strong>
             </p>
         </div>
     </div>
 
     <div class="mb-4">
-        <h2 class="h5 mb-3">Notes du Médecin</h2>
+        <h2 class="h5 mb-3">Notes du Médecin :</h2>
         <div th:if="${#lists.isEmpty(notes)}">
             <p class="text-muted">Aucune note n'a été trouvée.</p>
         </div>
@@ -69,7 +67,7 @@
     </div>
 
     <div class="mb-4">
-        <h2 class="h5 mb-3">Ajouter une note</h2>
+        <h2 class="h5 mb-3">Ajouter une note :</h2>
         <form th:action="@{/notes}" method="post">
             <input type="hidden" name="patientId" th:value="${patient.id}" />
             <div class="mb-3">
