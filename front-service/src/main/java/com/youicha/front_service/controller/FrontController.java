@@ -125,7 +125,7 @@ public class FrontController {
     public String savePatient(@ModelAttribute("patient") Patient patient, Model model) {
         try {
             // Sending the modified data of the patient to patient-service via gateway-service
-            restTemplate.postForObject("http://gateway-service:8080/api/patients", patient, Patient.class);
+            restTemplate.postForObject("http://gateway-service:8080/api/patients/save", patient, Patient.class);
         } catch (Exception e) {
             model.addAttribute("error", "Error while saving the patient : " + e.getMessage());
             return "patient-form";

@@ -40,9 +40,25 @@ public class PatientService {
     /**
      * Saves a new patient or updates an existing one
      * @param patient The patient object to save / update
-     * @return The saved /updated patient with assigned ID
+     * @return The saved / updated patient with assigned ID
      */
     public Patient savePatient(Patient patient) {
+        if (patient.getId() == null) {
+            return patientRepository.save(patient);
+        }
+
+        Optional<Patient> existingPatientOpt = patientRepository.findById(patient.getId());
+        if (existingPatientOpt.isPresent()) {
+            Patient existingPatient = existingPatientOpt.get();
+            existingPatient.setFirstName(patient.getFirstName());
+            existingPatient.setLastName(patient.getLastName());
+            existingPatient.setBirthDate(patient.getBirthDate());
+            existingPatient.setGender(patient.getGender());
+            existingPatient.setPhoneNumber(patient.getPhoneNumber());
+            existingPatient.setAddress(patient.getAddress());
+
+            return patientRepository.save(existingPatient);
+        }
         return patientRepository.save(patient);
     }
 

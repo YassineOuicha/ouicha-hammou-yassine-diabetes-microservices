@@ -15,6 +15,9 @@
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <form th:action="@{/patients/save}" th:object="${patient}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
         <div class="mb-3">
             <label for="firstName" class="form-label">Prénom *</label>
             <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>

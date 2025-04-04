@@ -53,13 +53,14 @@ header {
 .actions-column {
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 5px;
-  align-items: stretch;
+  justify-content: flex-start;
 }
 
 .actions-column a {
-  width: 100%;
+  flex: 0 0 auto;
+  min-width: 90px;
 }
 
 .btn {

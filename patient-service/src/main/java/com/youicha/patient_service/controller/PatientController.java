@@ -45,9 +45,15 @@ public class PatientController {
      * @param patient The patient object with data to save / update in database
      * @return The saved / updated patient with generated ID
      */
-    @PostMapping
+    @PostMapping("/save")
     public Patient createOrUpdatePatient(@RequestBody Patient patient) {
-        return patientService.savePatient(patient);
+        if (patient.getId() != null) {
+            Optional<Patient> existingPatient = patientService.getPatientById(patient.getId());
+            if (existingPatient.isPresent()) {
+                return patientService.savePatient(patient); // Update
+            }
+        }
+        return patientService.savePatient(patient); // Creation if patient doesn't exist in database
     }
 
     /**

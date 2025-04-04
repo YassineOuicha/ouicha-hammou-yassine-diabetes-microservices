@@ -36,8 +36,8 @@
                 <td th:text="${patient.gender}"></td>
                 <td th:text="${patient.address} ?: 'Non renseignée'"></td>
                 <td th:text="${patient.phoneNumber} ?: 'Non renseigné'"></td>
-                <td class="p-0">
-                    <div class="d-flex gap-2">
+                <td>
+                    <div class="actions-column">
                         <a th:href="@{/patients/{id}(id=${patient.id})}" class="btn btn-primary">Consulter</a>
                         <a th:href="@{/patients/edit/{id}(id=${patient.id})}" class="btn btn-warning">Modifier</a>
                     </div>
