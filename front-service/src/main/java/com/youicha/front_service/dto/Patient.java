@@ -13,6 +13,9 @@ public class Patient {
     private LocalDate birthDate;
     private String gender;
 
+    private String address;
+    private String phoneNumber;
+
     // Constructors
 
     public Patient() {
@@ -67,5 +70,21 @@ public class Patient {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
