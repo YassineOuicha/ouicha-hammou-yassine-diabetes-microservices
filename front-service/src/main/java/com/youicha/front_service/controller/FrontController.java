@@ -164,4 +164,23 @@ public class FrontController {
         // Redirect to the patient's details page after adding the note
         return "redirect:/patients/" + note.getPatientId();
     }
+
+    /**
+     * Handles the deletion of an existing patient
+     *
+     * @param id the unique identifier of the patient to be deleted
+     * @param model the Spring model to add attributes for the view
+     * @return A redirection to the patient's details page
+     */
+    @GetMapping("/patients/delete/{id}")
+    public String deletePatient(@PathVariable Long id, Model model) {
+        try {
+            // Sending the id of patient to delete from patient-service via gateway-service
+            restTemplate.delete("http://gateway-service:8080/api/patients/" + id);
+            model.addAttribute("successMessage", "The patient with the ID : " + id +" has been deleted");
+        } catch (Exception e) {
+            model.addAttribute("error", "Error while deleting the patient  with the ID : " + id + ", Error : " + e.getMessage());
+        }
+        return "redirect:/patients";
+    }
 }
