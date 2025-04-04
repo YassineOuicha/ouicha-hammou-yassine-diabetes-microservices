@@ -1,6 +1,7 @@
 package com.youicha.front_service.controller;
 
 import com.youicha.front_service.dto.Note;
+import com.youicha.front_service.dto.Patient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,6 +92,31 @@ public class FrontController {
         }
         // Return the view template name for displaying the patient's details
         return "patient-details";
+    }
+
+    @GetMapping("/patients/edit/{id}")
+    public String showEditPatientForm(@PathVariable Long id, Model model) {
+        try {
+            // Retrieving patient from patient-service via gateway-service
+            Patient patient = restTemplate.getForObject("http://gateway-service:8080/api/patients/" + id, Patient.class);
+            model.addAttribute("patient", patient);
+        } catch (Exception e) {
+            model.addAttribute("error", "Error while fetching the patient : " + id + " : " + e.getMessage());
+            return "redirect:/patients";
+        }
+        return "patient-form";
+    }
+
+    @PostMapping("/patients/save")
+    public String savePatient(@ModelAttribute("patient") Patient patient, Model model) {
+        try {
+            // Sending the modified data of the patient to patient-service via gateway-service
+            restTemplate.postForObject("http://gateway-service:8080/api/patients", patient, Patient.class);
+        } catch (Exception e) {
+            model.addAttribute("error", "Error while saving the patient : " + e.getMessage());
+            return "patient-form";
+        }
+        return "redirect:/patients";
     }
 
     /**
