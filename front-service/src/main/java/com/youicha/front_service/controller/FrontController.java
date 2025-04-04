@@ -94,6 +94,13 @@ public class FrontController {
         return "patient-details";
     }
 
+    /**
+     * Displays the form for editing an existing patient
+     *
+     * @param id the unique identifier of the patient to edit
+     * @param model the Spring Model object used to pass attributes to the view
+     * @return patient-form if the patient is retrieved successfully, otherwise redirects to the patients list
+     */
     @GetMapping("/patients/edit/{id}")
     public String showEditPatientForm(@PathVariable Long id, Model model) {
         try {
@@ -107,6 +114,13 @@ public class FrontController {
         return "patient-form";
     }
 
+    /**
+     * Processes the form submission for creating or updating a patient
+     *
+     * @param patient the patient object populated from the form data
+     * @param model the Spring model to add attributes for the view
+     * @return a redirect to the list of patients after successful save or the form view if an error occurs
+     */
     @PostMapping("/patients/save")
     public String savePatient(@ModelAttribute("patient") Patient patient, Model model) {
         try {
@@ -117,6 +131,18 @@ public class FrontController {
             return "patient-form";
         }
         return "redirect:/patients";
+    }
+
+    /**
+     * Displays the form for adding a new patient
+     *
+     * @param model the Spring model to add attributes for the view
+     * @return the form view for adding a new patient
+     */
+    @GetMapping("/patients/new")
+    public String showNewPatientForm(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "patient-form";
     }
 
     /**
